@@ -1,0 +1,73 @@
+# import libary
+import numpy as np
+import pandas as pd
+import matplotlib.pyplot as plt
+import os
+import PIL 
+import tensorflow as tf
+from tensorflow import keras
+from tensorflow.keras import layers
+from tensorflow.keras.models import Sequential
+from sklearn.metrics import classification_report
+import pathlib
+ # list of sub directory(class)
+class_names = []
+for x in os.walk(dataset_path):
+    sub_dir = x[0]
+    sub_dir_list = str(sub_dir).split('/')
+    if len(sub_dir_list) > 4:
+        x_class = (sub_dir_list[-1])
+        class_names.append(x_class)
+
+print(class_names)
+['white spot', 'Anthracnose', 'healthy', 'bird eye spot', 'brown blight', 'red leaf spot', 'gray light', 'algal leaf']
+# print total number of images in the dataset
+for class_i in class_names:
+    image_count = len(list(dataset_dir.glob(f'{class_i}/*.jpg')))
+    print(f"Images in class {class_i}:",image_count)
+Images in class white spot: 142
+Images in class Anthracnose: 100
+Images in class healthy: 74
+Images in class bird eye spot: 100
+Images in class brown blight: 113
+Images in class red leaf spot: 143
+Images in class gray light: 100
+Images in class algal leaf: 113
+# Parameter setting
+train_batch = 128
+val_batch = 128
+img_height = 224
+img_width = 224
+IMG_SIZE = (img_height, img_width)
+val_split = 0.2
+# Load data for Training
+train_ds = tf.keras.utils.image_dataset_from_directory(dataset_dir,
+                                                       validation_split=val_split,
+                                                       subset="training",
+                                                       seed=123,
+                                                       image_size=(img_height, img_width),
+                                                       batch_size=train_batch
+                                                      )
+Found 885 files belonging to 8 classes.
+Using 708 files for training.
+2022-07-07 02:00:35.718624: I tensorflow/stream_executor/cuda/cuda_gpu_executor.cc:937] successful NUMA node read from SysFS had negative value (-1), but there must be at least one NUMA node, so returning NUMA node zero
+2022-07-07 02:00:35.899584: I tensorflow/stream_executor/cuda/cuda_gpu_executor.cc:937] successful NUMA node read from SysFS had negative value (-1), but there must be at least one NUMA node, so returning NUMA node zero
+2022-07-07 02:00:35.900556: I tensorflow/stream_executor/cuda/cuda_gpu_executor.cc:937] successful NUMA node read from SysFS had negative value (-1), but there must be at least one NUMA node, so returning NUMA node zero
+2022-07-07 02:00:35.903351: I tensorflow/core/platform/cpu_feature_guard.cc:142] This TensorFlow binary is optimized with oneAPI Deep Neural Network Library (oneDNN) to use the following CPU instructions in performance-critical operations:  AVX2 AVX512F FMA
+To enable them in other operations, rebuild TensorFlow with the appropriate compiler flags.
+# Load data for Training
+train_ds = tf.keras.utils.image_dataset_from_directory(dataset_dir,
+                                                       validation_split=val_split,
+                                                       subset="training",
+                                                       seed=123,
+                                                       image_size=(img_height, img_width),
+                                                       batch_size=train_batch
+                                                      )
+Found 885 files belonging to 8 classes.
+Using 708 files for training.
+2022-07-07 02:00:35.718624: I tensorflow/stream_executor/cuda/cuda_gpu_executor.cc:937] successful NUMA node read from SysFS had negative value (-1), but there must be at least one NUMA node, so returning NUMA node zero
+2022-07-07 02:00:35.899584: I tensorflow/stream_executor/cuda/cuda_gpu_executor.cc:937] successful NUMA node read from SysFS had negative value (-1), but there must be at least one NUMA node, so returning NUMA node zero
+2022-07-07 02:00:35.900556: I tensorflow/stream_executor/cuda/cuda_gpu_executor.cc:937] successful NUMA node read from SysFS had negative value (-1), but there must be at least one NUMA node, so returning NUMA node zero
+2022-07-07 02:00:35.903351: I tensorflow/core/platform/cpu_feature_guard.cc:142] This TensorFlow binary is optimized with oneAPI Deep Neural Network Library (oneDNN) to use the following CPU instructions in performance-critical operations:  AVX2 AVX512F FMA
+To enable them in other operations, rebuild TensorFlow with the appropriate compiler flags.
+2022-07-07 02:00:35.903718: I tensorflow/stream_executor/cuda/cuda_gpu_executor.cc:937] successful NUMA node read from SysFS had negative value (-1), but there must be at least one NUMA node, so returning NUMA node zero
